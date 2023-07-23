@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import * as dotenv from "dotenv";
 
+dotenv.config();
 //Configuro un puerto
 const app = express();
 app.set('port', process.env.PORT || 4000);
