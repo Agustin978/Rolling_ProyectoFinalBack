@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import * as dotenv from "dotenv";
 import './src/dataBase/DBConnection';
+import usuarioRouter from './src/routes/usuarios.routes';
 
 dotenv.config(); //Para leer variables de entorno
 //Configuro un puerto
@@ -20,4 +21,4 @@ app.use(express.urlencoded({extended:true}));
 app.use(morgan('dev')); //Nos aporta informacion adicional en la terminal
 
 //Ingreso de rutas
-app.get('/apiusuarios');
+app.use('/apiusuarios', usuarioRouter);
