@@ -16,3 +16,18 @@ export const obtenerUsuario = async (req, res) =>
         });
     }
 }
+
+export const obtenerUsuarios = async (req, res) =>
+{
+    try
+    {
+        const usuarios = await Usuario.find();
+        res.status(200).json(usuarios);
+    }catch(error)
+    {
+        console.log('A ocurrido un error al intentar comunicarse con la base de datos. Info de error: '+error);
+        res.status(400).json({
+            mensaje: 'Error al buscar los usuarios en la base de datos.'
+        });
+    }
+}
