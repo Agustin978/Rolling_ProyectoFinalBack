@@ -169,3 +169,30 @@ export const editaUsuario = async (req, res) =>
         });
     }
 }
+
+export const borrarUsuario = async (req, res) =>
+{
+    try
+    {
+        const usuario = await Usuario.findById(req.params.id);
+        if(!usuario)
+        {
+            return res.status(400).json(
+            {
+                mensaje: 'El usuario con id "'+req.params.id+'" no se encontro en la base de datos'
+            });
+        }
+        await Usuario.findByIdAndDelete(req.params.id);
+        res.status(200).json(
+            {
+                mensaje: 'El usuario fue eliminado exitosamente.'
+            }
+        )
+    }catch(error)
+    {
+        console.log('A ocurrido un error al intentar comunicarse con la base de datos. Info de error: '+error);
+        res.status(404).json({
+            mensaje: 'Error al eliminar el usuario con id "'+req.params.id+'" de la base de datos.'
+        });
+    }
+}
