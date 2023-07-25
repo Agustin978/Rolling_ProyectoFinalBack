@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { creaUsuario, editaUsuario, login, obtenerUsuario, obtenerUsuarios } from '../controllers/usuarios.controllers';
+import { borrarUsuario, creaUsuario, editaUsuario, login, obtenerUsuario, obtenerUsuarios } from '../controllers/usuarios.controllers';
 
 const router = Router();
 
@@ -29,7 +29,8 @@ router.route('/usuarios/:id')
         check('type')
             .notEmpty()
             .withMessage('No se como pero hiciste que el tipo de usuario este vacio. El usuario debe tener algun tipo.')
-      ], editaUsuario); 
+      ], editaUsuario)
+      .delete(borrarUsuario); 
 
 router.route('/usuarios')
       .get(obtenerUsuarios)  //Para obtener todos los usuarios almacenados en la bd
