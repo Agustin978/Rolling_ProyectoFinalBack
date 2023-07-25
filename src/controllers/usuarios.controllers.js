@@ -57,7 +57,7 @@ export const creaUsuario = async (req, res) =>
             );
         }else
         {
-            const errors = validationResult(req.body);
+            const errors = validationResult(req);
             if(!errors.isEmpty()) //En caso que hayan errores
             {
                 return res.status(400).json(
@@ -85,6 +85,87 @@ export const creaUsuario = async (req, res) =>
         console.log('A ocurrido un error al intentar comunicarse con la base de datos. Info de error: '+error);
         res.status(400).json({
             mensaje: 'Error al intentar ingresar el nuevo usuario en la base de datos.'
+        });
+    }
+}
+
+export const login = async (req, res) => 
+{
+    try
+    {
+        const {email, password} = req.body;
+        let usuario = await Usuario.findOne({email: email});
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) //En caso que hayan errores
+        {
+            return res.status(400).json(
+                {
+                    error: errors.array()
+                }
+            );
+        }
+        if(!usuario)
+        {
+            return res.status(400).json(
+                {
+                    mensaje: 'Correo o password incorrectos.'
+                }
+            );
+        }
+        const passwordEncriptada = bcrypt.compareSync(password, usuario.password);
+        if(!passwordEncriptada)
+        {
+            return res.status(400).json(
+                {
+                    mensaje: 'Correo o password incorrectos.'
+                }
+            );
+        }else
+        {
+            res.status(200).json(
+                {
+                    mensaje: 'Usuario existente',
+                    uid: usuario._id,
+                    nombreUsuario: usuario.nombreUsuario,
+                    type: usuario.type,
+                    email: usuario.email
+                }
+            )
+        }
+    }catch(error)
+    {
+        console.log('A ocurrido un error al intentar comunicarse con la base de datos. Info de error: '+error);
+        res.status(400).json({
+            mensaje: 'Error al intentar loguearse.'
+        });
+    }
+}
+
+export const editaUsuario = async (req, res) => 
+{
+    try
+    {
+        const errors = validationResult(req);
+        console.log(req.body);
+        if(!errors.isEmpty())
+        {
+            return res.status(400).json(
+                {
+                    error: errors.array()
+                }
+            )
+        }
+        await Usuario.findByIdAndUpdate(req.params.id, req.body);
+        res.status(200).json(
+            {
+                mensaje: 'El usuario fue editado correctamente'
+            }
+        )
+    }catch(error)
+    {
+        console.log('A ocurrido un error al intentar comunicarse con la base de datos. Info de error: '+error);
+        res.status(404).json({
+            mensaje: 'Error, el usuario no pudo ser editado.'
         });
     }
 }
