@@ -23,6 +23,6 @@ app.use(morgan('dev')); //Nos aporta informacion adicional en la terminal
 
 //Ingreso de rutas
 app.use('/apiusuarios', usuarioRouter);
-app.use('/api/productos', productoRouter); //ruta de productos
+app.use('/apiproductos', productoRouter); //ruta de productos
 
 ///////////////////
