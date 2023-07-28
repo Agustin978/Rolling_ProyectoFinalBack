@@ -1,6 +1,5 @@
 import { validationResult } from 'express-validator';
-import Producto from '../models/producto';
-import bcrypt from 'bcrypt';
+import Producto from '../models/productos';
 
 export const obtenerProducto = async (req, res) => {
   try {
@@ -80,3 +79,30 @@ export const borrarProducto = async (req, res) => {
     });
   }
 };
+
+export const editarProducto = async (req, res) => {
+  try
+  {
+    const errors = validationResult(req);
+    if(!errors.isEmpty())
+    {
+      return res.status(400).json(
+        {
+          error: errors.array()
+        }
+      );
+    }
+    await Producto.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json(
+      {
+        mensaje: 'El producto fue editado exitosamente.'
+      }
+    )
+  }catch(error)
+  {
+      console.log('A ocurrido un error al intentar comunicarse con la base de datos. Info de error: '+error);
+      res.status(404).json({
+          mensaje: 'Error, el producto no pudo ser editado.'
+      });
+  }
+}
