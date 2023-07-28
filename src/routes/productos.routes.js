@@ -20,11 +20,11 @@ router.route('/productos')
         check('precioNuevo')
             .notEmpty()
             .withMessage('El precio del producto es obligatorio.')
-            .isInt({ min: 50, max: 10000 })
+            .isFloat({ min: 50, max: 10000 })
             .withMessage('El precio debe ser un número entre 50 y 10000'),
         check('precioAnterior')
             .optional({ nullable: true }) 
-            .isInt({ min: 50, max: 10000 })
+            .isFloat({ min: 50, max: 10000 })
             .withMessage('El precio anterior debe ser un número entre 50 y 10000'),
         check('descripcion')
             .notEmpty()
