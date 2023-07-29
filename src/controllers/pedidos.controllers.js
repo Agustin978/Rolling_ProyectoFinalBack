@@ -58,7 +58,7 @@ export const editarPedido = async (req, res) =>
     try
     {
         const errors = validationResult(req);
-        console.log(req.body);
+        //console.log(req.body);
         if(!errors.isEmpty())
         {
             return res.status(400).json(
@@ -95,8 +95,8 @@ export const borrarPedido = async (req, res) =>
             });
         }
       
-        console.log(req.params.id);
-        await pedido.findByIdAndDelete(req.params.id);
+        //console.log(req.params.id);
+        await Pedido.findByIdAndDelete(req.params.id);
         res.status(200).json(
             {
                 mensaje: 'El pedido fue eliminado exitosamente.'
