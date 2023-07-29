@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import * as dotenv from "dotenv";
 import './src/dataBase/DBConnection';
 import usuarioRouter from './src/routes/usuarios.routes';
+import pedidoRouter from './src/routes/pedidos.routes';
 import productoRouter from './src/routes/productos.routes';
 
 dotenv.config(); //Para leer variables de entorno
@@ -23,6 +24,6 @@ app.use(morgan('dev')); //Nos aporta informacion adicional en la terminal
 
 //Ingreso de rutas
 app.use('/apiusuarios', usuarioRouter);
+app.use('/apipedidos', pedidoRouter);
 app.use('/apiproductos', productoRouter); //ruta de productos
 
-///////////////////
