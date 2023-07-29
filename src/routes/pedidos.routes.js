@@ -10,12 +10,15 @@ import {
 
 const router = Router();
 
-router.route("/pedidos").get(obtenerPedidos).put(editarPedido);
+router.route("/pedidos").get(obtenerPedidos);
 router
   .route("/pedidos/:id")
   .get(obtenerPedido)
   .put(
     [
+      check("idUsuario")
+        .notEmpty()
+        .withMessage('El id del usuario es necesario'),
       check("idProducto")
         .notEmpty()
         .withMessage("El id del producto es necesario"),
@@ -63,7 +66,7 @@ router
         .withMessage("La cantidad es necesaria para almacenar el pedido")
         .isNumeric()
         .withMessage("El valor ingresado debe de ser numerico")
-        .isFloat({ min: 1, max: 50 })
+        .isInt({ min: 1, max: 50 })
         .withMessage(
           "La cantidad minima que se puede pedir es 1 y la maxima de 50"
         ),
@@ -78,7 +81,13 @@ router
         ),
       check("estado")
         .notEmpty()
-        .withMessage("El estado en que esta el pedido es obligatorio"),
+        .withMessage("El estado en que esta el pedido es obligatorio")
+        .isIn([
+          'Entregado',
+          'Pendiente',
+          'Cancelado'
+        ])
+        .withMessage('Estado no valido, seleccione una opcion correcta ("Entregado", "Pendiente", "Cancelado")')
     ],
     editarPedido
   )
@@ -88,6 +97,9 @@ router
   .route("/pedidosnuevo")
   .post(
     [
+      check("idUsuario")
+        .notEmpty()
+        .withMessage('El id del usuario es necesario'),
       check("idProducto")
         .notEmpty()
         .withMessage("El id del producto es necesario"),
@@ -135,7 +147,7 @@ router
         .withMessage("La cantidad es necesaria para almacenar el pedido")
         .isNumeric()
         .withMessage("El valor ingresado debe de ser numerico")
-        .isFloat({ min: 1, max: 50 })
+        .isInt({ min: 1, max: 50 })
         .withMessage(
           "La cantidad minima que se puede pedir es 1 y la maxima de 50"
         ),
@@ -150,7 +162,13 @@ router
         ),
       check("estado")
         .notEmpty()
-        .withMessage("El estado en que esta el pedido es obligatorio"),
+        .withMessage("El estado en que esta el pedido es obligatorio")
+        .isIn([
+          'Entregado',
+          'Pendiente',
+          'Cancelado'
+        ])
+        .withMessage('Estado no valido, seleccione una opcion correcta ("Entregado", "Pendiente", "Cancelado")')
     ],
     creaPedido
   );
