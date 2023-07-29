@@ -1,6 +1,10 @@
 import { Schema, model } from "mongoose";
 
 const pedidoSchema = new Schema({
+    idUsuario: {
+        type:String,
+        required:true
+    },
     idProducto: {
         type:String,
         required:true
@@ -33,7 +37,7 @@ const pedidoSchema = new Schema({
         type: String,
     },
     fechaPedido: {
-        type: Date,
+        type: String,
         required: true
     },
     detallePedido: {
