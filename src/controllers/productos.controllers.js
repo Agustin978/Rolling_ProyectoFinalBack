@@ -25,6 +25,21 @@ export const obtenerProductos = async (req, res) => {
   }
 };
 
+export const obtenerProductoCategoria = async (req, res) => {
+  try
+  {
+    const categoria = req.query.categoria;
+    const productos = await Producto.find({categoria});
+    res.status(200).json(productos);
+  }catch(error)
+  {
+    console.log('Ocurrió un error al intentar comunicarse con la base de datos. Info de error: ' + error);
+    res.status(400).json({
+      mensaje: 'Error al buscar los productos en la base de datos.',
+    });
+  }
+}
+
 export const crearProducto = async (req, res) => {
   try {
     const { nombreProducto, imagen, precioNuevo, precioAnterior, descripcion, categoria } = req.body;

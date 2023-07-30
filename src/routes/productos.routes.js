@@ -1,11 +1,13 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { borrarProducto, crearProducto, editarProducto, obtenerProducto, obtenerProductos } from '../controllers/productos.controllers';
+import { borrarProducto, crearProducto, editarProducto, obtenerProducto, obtenerProductoCategoria, obtenerProductos } from '../controllers/productos.controllers';
 
 const router = Router();
 
 router.route('/productos')
       .get(obtenerProductos);
+
+router.route('/productoscategoria').get(obtenerProductoCategoria);//Para obtener una categoria especial
 
 router.route('/productos/:id')
       .get(obtenerProducto)
