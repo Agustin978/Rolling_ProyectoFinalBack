@@ -42,7 +42,6 @@ const pedidoSchema = new Schema({
     },
     detallePedido: {
         type: String,
-        minLength: 4,
         maxLength: 200
     },
     cantidad: {
