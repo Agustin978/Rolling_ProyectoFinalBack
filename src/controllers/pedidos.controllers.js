@@ -29,6 +29,21 @@ export const obtenerPedido = async (req, res) =>
         });
     }
 }
+export const obtenerPedidosUsuario = async (req, res) => 
+{
+    try
+    {
+        const idUsuario = req.query.uid;
+        const pedidos = await Pedido.find({idUsuario});
+        res.status(201).json(pedidos);
+    }catch(error)
+    {
+        console.log('A ocurrido un error al intentar comunicarse con la base de datos. Info de error: '+error);
+        res.status(400).json({ 
+            mensaje: 'Error al buscar los pedidos del usuario: '+req.params.nombreUsuario+' en la base de datos.'
+        });
+    }
+}
 export const creaPedido = async (req, res) =>
 {
     try

@@ -6,11 +6,14 @@ import {
   editarPedido,
   obtenerPedido,
   obtenerPedidos,
+  obtenerPedidosUsuario
 } from "../controllers/pedidos.controllers";
 
 const router = Router();
 
 router.route("/pedidos").get(obtenerPedidos);
+router.route("/pedidosusuario").get(obtenerPedidosUsuario);
+
 router
   .route("/pedidos/:id")
   .get(obtenerPedido)
